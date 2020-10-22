@@ -11,13 +11,16 @@ function _drawResults() {
 }
 
 /**Draws the Users saved songs to the page */
-function _drawPlaylist() { }
+function _drawPlaylist() {
+
+}
 
 //Public
 export default class SongsController {
   constructor() {
     //TODO Don't forget to register your listeners and get your data
     ProxyState.on("songs", _drawResults)
+    ProxyState.on("playlist", _drawPlaylist)
   }
 
   /**Takes in the form submission event and sends the query to the service */
@@ -35,7 +38,13 @@ export default class SongsController {
    * Takes in a song id and sends it to the service in order to add it to the users playlist
    * @param {string} id
    */
-  addSong(id) { }
+  addSong(id) {
+    try {
+      songService.addSong(id)
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   /**
    * Takes in a song id to be removed from the users playlist and sends it to the server

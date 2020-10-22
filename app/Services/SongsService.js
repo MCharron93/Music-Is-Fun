@@ -13,6 +13,7 @@ class SongsService {
     // @ts-ignore
     $.getJSON(url)
       .then(res => {
+        console.log(res);
         ProxyState.songs = res.results.map(rawData => new Song(rawData));
       })
       .catch(err => {
@@ -34,9 +35,11 @@ class SongsService {
    * Afterwords it will update the store to reflect saved info
    * @param {string} id
    */
-  addSong(id) {
+  async addSong(id) {
     //TODO you only have an id, you will need to find it in the store before you can post it
     //TODO After posting it what should you do?
+    let song = ProxyState.songs.find(s => s._id == id)
+    let res = await sandBoxApi.post("", new Song(song))
   }
 
   /**
