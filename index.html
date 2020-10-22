@@ -22,7 +22,7 @@
     <main class="container-fluid">
         <section class="row justify-content-center">
             <div class="col-4">
-                <form onsubmit="app.songsController.search(event)">
+                <form id="form" onsubmit="app.songsController.search(event)">
                     <input type="text" class="form-control" name="query" placeholder="Search For Music" />
                     <button class="btn btn-success mt-1 form-control" type="submit">
                         Search
@@ -38,7 +38,9 @@
             </div>
             <div class="col-4">
                 <h3 class="text-center">Playlist</h3>
-                <div class="row" id="playlist"></div>
+                <div class="row" id="playlist">
+
+                </div>
             </div>
         </section>
     </main>
@@ -54,6 +56,7 @@
         integrity="sha256-XmdRbTre/3RulhYk/cOBUMpYlaAp2Rpo/s556u0OIKk=" crossorigin="anonymous"></script>
     <script src=" https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"
         integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="app/main.js" type="module"></script>
 </body>
 

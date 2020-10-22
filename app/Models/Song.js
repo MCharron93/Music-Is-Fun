@@ -27,8 +27,8 @@ export default class Song {
   }
 
   get playlistTemplate() {
-    return `
-
-        `;
+    return /*html*/ `
+    <div class="col-12">${this.artist} - ${this.title} <button class="btn btn-danger" onclick="app.songsController.removeSong('${this._id}')">&times</button></div>
+        `
   }
 }

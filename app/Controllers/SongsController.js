@@ -12,7 +12,11 @@ function _drawResults() {
 
 /**Draws the Users saved songs to the page */
 function _drawPlaylist() {
-
+  // console.log("hello")
+  let template = ""
+  let playlist = ProxyState.playlist
+  playlist.forEach(s => template += s.playlistTemplate)
+  document.getElementById("playlist").innerHTML = template
 }
 
 //Public
@@ -21,6 +25,7 @@ export default class SongsController {
     //TODO Don't forget to register your listeners and get your data
     ProxyState.on("songs", _drawResults)
     ProxyState.on("playlist", _drawPlaylist)
+    _drawPlaylist()
   }
 
   /**Takes in the form submission event and sends the query to the service */
@@ -32,6 +37,9 @@ export default class SongsController {
     } catch (error) {
       console.error(error);
     }
+
+    // @ts-ignore
+    document.getElementById("form").reset();
   }
 
   /**
@@ -44,11 +52,18 @@ export default class SongsController {
     } catch (error) {
       console.error(error)
     }
+    _drawPlaylist()
   }
 
   /**
    * Takes in a song id to be removed from the users playlist and sends it to the server
    * @param {string} id
    */
-  removeSong(id) { }
+  removeSong(id) {
+    try {
+      songService.removeSong(id)
+    } catch (error) {
+      console.error(error)
+    }
+  }
 }

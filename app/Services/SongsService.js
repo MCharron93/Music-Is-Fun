@@ -13,7 +13,7 @@ class SongsService {
     // @ts-ignore
     $.getJSON(url)
       .then(res => {
-        console.log(res);
+        // console.log(res)
         ProxyState.songs = res.results.map(rawData => new Song(rawData));
       })
       .catch(err => {
@@ -24,10 +24,16 @@ class SongsService {
   /**
    * Retrieves the saved list of songs from the sandbox
    */
+
+  constructor() {
+    this.getMySongs()
+  }
+
   async getMySongs() {
     let res = await sandBoxApi.get()
     //TODO What are you going to do with this result
     let results = res.data.data.map(rawData => new Song(rawData));
+    ProxyState.playlist = results
   }
 
   /**
@@ -39,7 +45,10 @@ class SongsService {
     //TODO you only have an id, you will need to find it in the store before you can post it
     //TODO After posting it what should you do?
     let song = ProxyState.songs.find(s => s._id == id)
-    let res = await sandBoxApi.post("", new Song(song))
+    let res = await sandBoxApi.post("", song)
+    // console.log(res.data.data);
+    ProxyState.playlist.push(new Song(res.data.data))
+    ProxyState.playlist = ProxyState.playlist
   }
 
   /**
@@ -47,9 +56,31 @@ class SongsService {
    * Afterwords it will update the store to reflect saved info
    * @param {string} id
    */
-  removeSong(id) {
+  async removeSong(id) {
     //TODO Send the id to be deleted from the server then update the store
+    let deletedSong = await sandBoxApi.delete("" + id)
+    // @ts-ignore
+    // Swal.fire({
+    //   title: 'Are you sure?',
+    //   text: "You won't be able to revert this!",
+    //   icon: 'warning',
+    //   showCancelButton: true,
+    //   confirmButtonColor: '#3085d6',
+    //   cancelButtonColor: '#d33',
+    //   confirmButtonText: 'Yes, delete it!'
+    // }).then((result) => {
+    //   if (result.isConfirmed) {
+    //     // @ts-ignore
+    //     Swal.fire(
+    //       'Deleted!',
+    //       'Your file has been deleted.',
+    //       'success'
+    //     )
+    //   }
+    // })
+    this.getMySongs()
   }
+
 }
 
 const service = new SongsService();
