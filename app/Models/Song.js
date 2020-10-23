@@ -14,21 +14,21 @@ export default class Song {
     // <source src="${this.preview}" type="audio/ogg">
 
     return /*html*/ `
-    <div class="col-12">
+    <div class="col-6 shadow-lg rounded p-3">
       <img class="img-fluid" src="${this.albumArt}" alt=""/>
       <h3>${this.title}</h3>
       <h4>${this.album}</h4>
       <audio controls>
         <source src="${this.preview}" type="audio/mpeg">
       </audio>
-      <h6>Buy: $${this.price}</h6> <button class="btn btn-success" onclick="app.songsController.addSong('${this._id}')">Add to Library</button>
+      <h6>Buy: $${this.price}</h6> <button class="btn btn-primary" onclick="app.songsController.addSong('${this._id}')">Add to Library</button>
     </div>
         `;
   }
 
   get playlistTemplate() {
     return /*html*/ `
-    <div class="col-12">${this.artist} - ${this.title} <button class="btn btn-danger" onclick="app.songsController.removeSong('${this._id}')">&times</button></div>
+    <div class="col-12 shadow-lg">${this.artist} - ${this.title} <button class="text-danger close" onclick="app.songsController.removeSong('${this._id}')"><i class="fas fa-backspace"></i></button></div>
         `
   }
 }
